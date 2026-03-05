@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <input id="i" oninput="s(this.value)" placeholder="Search Pi...">
+    <h1 id="r">Loading...</h1>
+
+    <script>
+        let p = "";
+        const r = document.getElementById('r');
+
+        // Load the clean file
+        fetch('pi.txt').then(res => res.text()).then(data => {
+            p = data;
+            r.innerText = "Ready";
+            
+            // Check URL query on load (e.g., ?01564)
+            let q = location.search.substring(1);
+            if(q) { document.getElementById('i').value = q; s(q); }
+        });
+
+        function s(v) {
+            if (!p) return;
+            let res = p.indexOf(v);
+            r.innerText = res !== -1 ? "Index: " + res : "Not found";
+            history.replaceState(null, null, "?" + v);
+        }
+    </script>
+</body>
+</html>
