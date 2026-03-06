@@ -10,14 +10,13 @@
         if (!query) {
             output.innerText = "Error: No query in URL";
         } else {
-            // Load the clean pi.txt file
             fetch('pi.txt')
                 .then(res => res.text())
                 .then(piData => {
-                    const index = piData.indexOf(query);
-                    
-                    // This is the ONLY time text is placed in the 'result' div
-                    output.innerText = (index !== -1) ? index : "-1";
+                    // Shorter logic: No if-statement needed.
+                    // Found at index 0 becomes 1
+                    // Not found (-1) becomes 0
+                    output.innerText = piData.indexOf(query) + 1;
                 })
                 .catch(() => {
                     output.innerText = "Error: pi.txt missing";
